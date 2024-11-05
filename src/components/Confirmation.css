@@ -1,0 +1,36 @@
+.confirmation-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.confirmation-container h2 {
+    color: #4a90e2;
+}
+
+.confirmation-container ul {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+}
+.confirmation-container p {
+    font-size: 1.2em;
+}
+
+.navigate-button {
+    padding: 10px 20px;
+    background-color: #4a90e2; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.navigate-button:hover {
+    background-color: #357ABD; 
+}

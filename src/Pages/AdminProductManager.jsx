@@ -1,6 +1,7 @@
 
+
 import React, { useState, useEffect } from 'react';
-import './products.css'
+import './AdminProducManager.css'; 
 
 const AdminProductManager = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,7 @@ const AdminProductManager = () => {
     id: null, 
     name: '',
     description: '',
-    price: '',
+    price: '', 
     available: true,
     isHidden: false,
     image: null,
@@ -58,7 +59,6 @@ const AdminProductManager = () => {
 
     try {
       if (id) {
-     
         const response = await fetch(`http://localhost:3001/api/products/${id}`, {
           method: 'PUT',
           body: formDataToSubmit,
@@ -67,7 +67,6 @@ const AdminProductManager = () => {
           throw new Error('Error updating product');
         }
       } else {
-    
         const response = await fetch('http://localhost:3001/api/products', {
           method: 'POST',
           body: formDataToSubmit,
@@ -128,24 +127,24 @@ const AdminProductManager = () => {
   };
 
   return (
-    <div>
-      <h1>Manage Products</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>} 
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Product Name" value={formData.name} onChange={handleChange} required />
-        <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
-        <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange} required />
-        <input type="file" name="image" onChange={handleChange} />
-        <button type="submit">{formData.id ? 'Update Product' : 'Add Product'}</button>
+    <div className="admin-product-manager">
+      <h1 className="title">Manage Products</h1>
+      {error && <p className="error-message">{error}</p>} 
+      <form className="product-form" onSubmit={handleSubmit}>
+        <input className="form-input" type="text" name="name" placeholder="Product Name" value={formData.name} onChange={handleChange} required />
+        <textarea className="form-textarea" name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
+        <input className="form-input" type="number" name="price" placeholder="Price" value={formData.price} onChange={handleChange} required />
+        <input className="form-input" type="file" name="image" onChange={handleChange} />
+        <button className="submit-button" type="submit">{formData.id ? 'Update Product' : 'Add Product'}</button>
       </form>
       
-      <h2>Product List</h2>
-      <ul>
+      <h2 className="product-list-title">Product List</h2>
+      <ul className="product-list">
         {products.map(product => (
-          <li key={product.id}>
-            {product.name} - ${product.price} 
-            <button onClick={() => handleEdit(product)}>Edit</button>
-            <button onClick={() => handleDelete(product.id)}>Delete</button>
+          <li key={product.id} className="product-item">
+            {product.name} - R{product.price} 
+            <button className="edit-button" onClick={() => handleEdit(product)}>Edit</button>
+            <button className="delete-button" onClick={() => handleDelete(product.id)}>Delete</button>
           </li>
         ))}
       </ul>

@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage'; 
@@ -8,6 +7,9 @@ import Products from './Pages/Products';
 import Signup from './Pages/Signup'; 
 import AdminProductManager from './Pages/AdminProductManager'; 
 import AdminLogin from './Pages/AdminLogin'; 
+import Cart from './components/cart'; 
+import Checkout from './components/Checkout'; 
+import Confirmation from './components/Confirmation';
 import './App.css'; 
 
 function App() {
@@ -20,7 +22,10 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/admin-login" element={<AdminLogin />} /> 
                     <Route path="/admin-product-manager" element={<AdminProductManager />} /> 
-                    <Route path="/products" element={<Products />} /> 
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/cart" element={<Cart />} />           
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/confirmation" element={<Confirmation />} />  
                 </Routes>
             </div>
         </BrowserRouter>       
@@ -28,3 +33,5 @@ function App() {
 }
 
 export default App;
+
+
