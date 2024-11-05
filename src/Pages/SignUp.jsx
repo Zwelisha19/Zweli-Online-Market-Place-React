@@ -1,172 +1,475 @@
+// import React, { useState } from 'react';
+// import { useNavigate, Link } from 'react-router-dom';
+// import { auth } from '../config/firebaseConfig';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
+// import './signup.css';
+
+// const SignUp = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [userType, setUserType] = useState('user'); // Default to user
+//   const [errorMessage, setErrorMessage] = useState('');
+//   const [passwordError, setPasswordError] = useState('');
+//   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+//   const navigate = useNavigate();
+
+//   const validatePassword = (password) => {
+//     const minLength = 6; // Minimum length requirement
+//     const hasUpperCase = /[A-Z]/.test(password);
+//     const hasLowerCase = /[a-z]/.test(password);
+//     const hasNumbers = /\d/.test(password);
+//     const hasSpecialChars = /[!@#$%^&*]/.test(password);
+
+//     if (password.length < minLength) {
+//       return 'Password must be at least 6 characters long.';
+//     }
+//     if (!hasUpperCase) {
+//       return 'Password must contain at least one uppercase letter.';
+//     }
+//     if (!hasLowerCase) {
+//       return 'Password must contain at least one lowercase letter.';
+//     }
+//     if (!hasNumbers) {
+//       return 'Password must contain at least one number.';
+//     }
+//     if (!hasSpecialChars) {
+//       return 'Password must contain at least one special character.';
+//     }
+//     return '';
+//   };
+
+//   const handleSignUp = async (e) => {
+//     e.preventDefault();
+//     setErrorMessage('');
+//     setPasswordError('');
+//     setConfirmPasswordError('');
+
+//     // Validate the password
+//     const validationError = validatePassword(password);
+//     if (validationError) {
+//       setPasswordError(validationError);
+//       return;
+//     }
+
+//     // Validate confirm password
+//     if (password !== confirmPassword) {
+//       setConfirmPasswordError('Passwords do not match.');
+//       return;
+//     }
+
+//     try {
+//       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+//       // After successful sign-up, you can save the user role in Firestore
+//       // Example: saveUserRole(userCredential.user.uid, userType);
+//       navigate('/LandingPage');
+//     } catch (error) {
+//       setErrorMessage('Error creating account. Please try again.');
+//     }
+
+//     console.log('Sign Up:', { email, password, userType });
+//   };
+
+//   return (
+//     <div className="signup-container">
+//       <h1 className="signup-title">Sign Up</h1>
+//       <form onSubmit={handleSignUp} className="signup-form">
+//         <div className="form-group">
+//           <label className="form-label">Email:</label>
+//           <input
+//             type="email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">Password:</label>
+//           <input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//           {passwordError && (
+//             <p className="error-text">{passwordError}</p>
+//           )}
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">Confirm Password:</label>
+//           <input
+//             type="password"
+//             value={confirmPassword}
+//             onChange={(e) => setConfirmPassword(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//           {confirmPasswordError && (
+//             <p className="error-text">{confirmPasswordError}</p>
+//           )}
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">User Type:</label>
+//           <select value={userType} onChange={(e) => setUserType(e.target.value)} className="form-select">
+//             <option value="user">User</option>
+//             <option value="admin">Admin</option>
+//           </select>
+//         </div>
+//         <button type="submit" className="signup-button">Sign Up</button>
+//         <Link to="/login" className='link-classname'>Already have an account? Log In</Link>
+
+//         {errorMessage && ( 
+//           <p className="error-text">{errorMessage}</p>
+//         )}
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default SignUp;
+
+
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { useNavigate, Link } from 'react-router-dom';
+// import './signup.css';
+
+// const SignUp = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [userType, setUserType] = useState('user'); // Default to user
+//   const [errorMessage, setErrorMessage] = useState('');
+//   const navigate = useNavigate();
+
+//   const handleSignUp = async (e) => {
+//     e.preventDefault();
+//     setErrorMessage('');
+
+//     if (password !== confirmPassword) {
+//       setErrorMessage('Passwords do not match.');
+//       return;
+//     }
+
+//     try {
+//       const response = await fetch('http://localhost:3001/api/auth/register', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password, userType }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Error registering user');
+//       }
+
+//       const data = await response.json();
+//       console.log(data);
+//       navigate('/LandingPage'); // Redirect to the landing page after successful signup
+//     } catch (error) {
+//       setErrorMessage(error.message);
+//       console.error('Signup error:', error);
+//     }
+//   };
+
+//   return (
+//     <div className="signup-container">
+//       <h1 className="signup-title">Sign Up</h1>
+//       <form onSubmit={handleSignUp} className="signup-form">
+//         <div className="form-group">
+//           <label className="form-label">Email:</label>
+//           <input
+//             type="email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">Password:</label>
+//           <input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">Confirm Password:</label>
+//           <input
+//             type="password"
+//             value={confirmPassword}
+//             onChange={(e) => setConfirmPassword(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">User Type:</label>
+//           <select value={userType} onChange={(e) => setUserType(e.target.value)} className="form-select">
+//             <option value="user">User</option>
+//             <option value="admin">Admin</option>
+//           </select>
+//         </div>
+//         <button type="submit" className="signup-button">Sign Up</button>
+//         <Link to="/login" className='link-classname'>Already have an account? Log In</Link>
+
+//         {errorMessage && ( 
+//           <p className="error-text">{errorMessage}</p>
+//         )}
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default SignUp;
+
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { useNavigate, Link } from 'react-router-dom';
+// import './signup.css';
+
+// const SignUp = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [userType, setUserType] = useState('user'); // Default to user
+//   const [errorMessage, setErrorMessage] = useState('');
+//   const navigate = useNavigate();
+
+//   const handleSignUp = async (e) => {
+//     e.preventDefault();
+//     setErrorMessage('');
+
+//     if (password !== confirmPassword) {
+//       setErrorMessage('Passwords do not match.');
+//       return;
+//     }
+
+//     try {
+//       const response = await fetch('http://localhost:3001/api/auth/register', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password, userType }),
+//       });
+
+//       if (!response.ok) {
+//         const errorText = await response.text();
+//         try {
+//           const errorJson = JSON.parse(errorText);
+//           throw new Error(errorJson.message);
+//         } catch (e) {
+//           throw new Error(errorText);
+//         }
+//       }
+
+//       const data = await response.json();
+//       console.log(data);
+//       navigate('/LandingPage'); // Redirect to the landing page after successful signup
+//     } catch (error) {
+//       setErrorMessage(error.message);
+//       console.error('Signup error:', error);
+//     }
+//   };
+
+//   return (
+//     <div className="signup-container">
+//       <h1 className="signup-title">Sign Up</h1>
+//       <form onSubmit={handleSignUp} className="signup-form">
+//         <div className="form-group">
+//           <label className="form-label">Email:</label>
+//           <input
+//             type="email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">Password:</label>
+//           <input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">Confirm Password:</label>
+//           <input
+//             type="password"
+//             value={confirmPassword}
+//             onChange={(e) => setConfirmPassword(e.target.value)}
+//             className="form-input"
+//             required
+//           />
+//         </div>
+//         <div className="form-group">
+//           <label className="form-label">User Type:</label>
+//           <select value={userType} onChange={(e) => setUserType(e.target.value)} className="form-select">
+//             <option value="user">User</option>
+//             <option value="admin">Admin</option>
+//           </select>
+//         </div>
+//         <button type="submit" className="signup-button">Sign Up</button>
+//         <Link to="/login" className='link-classname'>Already have an account? Log In</Link>
+
+//         {errorMessage && (
+//           <p className="error-text">{errorMessage}</p>
+//         )}
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default SignUp;
+
+
+
 import React, { useState } from 'react';
-import './signup.css'; 
-import { useNavigate } from 'react-router-dom';
-import { auth, database } from "../config/firebaseConfig";
-import { addDoc, collection } from 'firebase/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import './signup.css';
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
-
+  const [userType, setUserType] = useState('user'); // Default to user
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const dbref = collection(database, "Users");
 
-  const validate = () => {
-    const newErrors = {};
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/; 
-    const phonePattern = /^\d{10}$/;
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasUppercase = /[A-Z]/;
+    const hasLowercase = /[a-z]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
 
-    if (!name) newErrors.name = 'Name is required';
-    if (!surname) newErrors.surname = 'Surname is required';
-    if (!phoneNumber) newErrors.phoneNumber = 'Phone number is required';
-    else if (!phonePattern.test(phoneNumber)) newErrors.phoneNumber = 'Invalid phone number';
-
-    if (!email) newErrors.email = 'Email is required';
-    else if (!emailPattern.test(email)) newErrors.email = 'Invalid email address';
-
-    if (!password) newErrors.password = 'Password is required';
-    else if (!passwordPattern.test(password)) 
-      newErrors.password = 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character';
-
-    if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
-
-    return newErrors;
+    if (password.length < minLength) {
+      return 'Password must be at least 8 characters long.';
+    }
+    if (!hasNumber.test(password)) {
+      return 'Password must contain at least one number.';
+    }
+    if (!hasUppercase.test(password)) {
+      return 'Password must contain at least one uppercase letter.';
+    }
+    if (!hasLowercase.test(password)) {
+      return 'Password must contain at least one lowercase letter.';
+    }
+    if (!hasSpecialChar.test(password)) {
+      return 'Password must contain at least one special character.';
+    }
+    return '';
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
 
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setErrorMessage(passwordError);
       return;
     }
 
-    setLoading(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match.');
+      return;
+    }
 
-      await addDoc(dbref, {
-        uid: user.uid,
-        email: user.email,
-        name,
-        surname,
-        phoneNumber,
-        createdAt: new Date(),
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, userType }),
       });
 
-      alert('User registered successfully!');
-      navigate("/login");
+      if (!response.ok) {
+        const errorText = await response.text();
+        try {
+          const errorJson = JSON.parse(errorText);
+          throw new Error(errorJson.message);
+        } catch (e) {
+          throw new Error(errorText);
+        }
+      }
+
+      const data = await response.json();
+      console.log(data);
+      navigate('/'); 
     } catch (error) {
-      console.error('Error during sign up:', error.message);
-      alert('Error during sign up: ' + error.message);
-    } finally {
-      setLoading(false);
+      setErrorMessage(error.message);
+      console.error('Signup error:', error);
     }
   };
 
   return (
     <div className="signup-container">
       <h1 className="signup-title">Sign Up</h1>
-      <form className="signup-form" onSubmit={handleSignUp}>
-        <div className="form-group">
-          <label className="form-label">Name:</label>
-          <input
-            type="text"
-            className="form-input"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-              setErrors((prev) => ({ ...prev, name: '' }));
-            }}
-            required
-          />
-          {errors.name && <p className="error-text">{errors.name}</p>}
-        </div>
-        <div className="form-group">
-          <label className="form-label">Surname:</label>
-          <input
-            type="text"
-            className="form-input"
-            value={surname}
-            onChange={(e) => {
-              setSurname(e.target.value);
-              setErrors((prev) => ({ ...prev, surname: '' }));
-            }}
-            required
-          />
-          {errors.surname && <p className="error-text">{errors.surname}</p>}
-        </div>
-        <div className="form-group">
-          <label className="form-label">Phone Number:</label>
-          <input
-            type="text"
-            className="form-input"
-            value={phoneNumber}
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-              setErrors((prev) => ({ ...prev, phoneNumber: '' }));
-            }}
-            required
-          />
-          {errors.phoneNumber && <p className="error-text">{errors.phoneNumber}</p>}
-        </div>
+      <form onSubmit={handleSignUp} className="signup-form">
         <div className="form-group">
           <label className="form-label">Email:</label>
           <input
             type="email"
-            className="form-input"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setErrors((prev) => ({ ...prev, email: '' }));
-            }}
+            onChange={(e) => setEmail(e.target.value)}
+            className="form-input"
             required
           />
-          {errors.email && <p className="error-text">{errors.email}</p>}
         </div>
         <div className="form-group">
           <label className="form-label">Password:</label>
           <input
             type="password"
-            className="form-input"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrors((prev) => ({ ...prev, password: '' }));
-            }}
+            onChange={(e) => setPassword(e.target.value)}
+            className="form-input"
             required
           />
-          {errors.password && <p className="error-text">{errors.password}</p>}
         </div>
         <div className="form-group">
           <label className="form-label">Confirm Password:</label>
           <input
             type="password"
-            className="form-input"
             value={confirmPassword}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-              setErrors((prev) => ({ ...prev, confirmPassword: '' }));
-            }}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="form-input"
             required
           />
-          {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
         </div>
-        <button type="submit" className="signup-button" disabled={loading}>
-          {loading ? 'Signing Up...' : 'Sign Up'}
-        </button>
-        <Link to={"/login"} className='link-classname'>Already registered? Log In</Link>
+        <div className="form-group">
+          <label className="form-label">User Type:</label>
+          <select value={userType} onChange={(e) => setUserType(e.target.value)} className="form-select">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button type="submit" className="signup-button">Sign Up</button>
+        <Link to="/login" className='link-classname'>Already have an account? Log In</Link>
+
+        {errorMessage && (
+          <p className="error-text">{errorMessage}</p>
+        )}
       </form>
     </div>
   );
